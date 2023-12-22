@@ -1,0 +1,24 @@
+.header {
+
+}
+.header-navbar {
+    display: flex;
+    flex-direction: row;
+    height: 40px;
+    padding: 5px;
+    border-bottom-width: thin;
+    border-bottom-style: solid;
+    border-bottom-color: #DFDEDF;
+}
+.header-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+}
+.header-logo {
+    /* TODO: 로고 CSS */
+}
+.header-link {
+    width: 100px;
+}
