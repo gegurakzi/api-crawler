@@ -11,12 +11,14 @@ public class ScheduleDto {
   public Long id;
   public Boolean isActive;
   public ApiModelDto apiModelDto;
+  public String reference;
   public String cronExpression;
 
   public static ScheduleDto of(Schedule schedule) {
     return ScheduleDto.builder()
         .id(schedule.getId())
         .apiModelDto(ApiModelDto.of(schedule.getApiModel()))
+        .reference(schedule.getReference())
         .cronExpression(schedule.getCronExpression())
         .build();
   }

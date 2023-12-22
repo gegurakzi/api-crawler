@@ -12,14 +12,12 @@ public class ApiModelDto {
   public Long id;
   public String url;
   public String header;
-  public String docType;
 
   public static ApiModelDto of(ApiModel apiModel) {
     return ApiModelDto.builder()
         .id(apiModel.getId())
         .url(apiModel.getUrl())
         .header(apiModel.getHeader())
-        .docType(apiModel.getDocType())
         .build();
   }
 }

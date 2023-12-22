@@ -19,6 +19,8 @@ public class Schedule {
   @ManyToOne(optional = false)
   private ApiModel apiModel;
   @Column
+  private String reference;
+  @Column
   private String cronExpression;
 
 }

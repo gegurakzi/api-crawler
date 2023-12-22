@@ -20,7 +20,5 @@ public class ApiModel {
   String url;
   @Column
   String header;
-  @Column
-  String docType;
 
 }

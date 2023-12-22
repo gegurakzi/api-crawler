@@ -7,6 +7,7 @@
     <div class="container">
         <form action="/schedules/create" method="post">
             <input type="text" name="apiModelId" placeholder="api id">
+            <input type="text" name="reference" placeholder="save type">
             <input type="text" name="cronExpression" placeholder="cron expression">
             <input type="submit" value="submit">
         </form>

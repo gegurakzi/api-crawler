@@ -14,6 +14,7 @@
                 <tr>
                     <th>schedule ID</th>
                     <th>API url</th>
+                    <th>save type</th>
                     <th>cron expression</th>
                     <th>action</th>
                 </tr>
@@ -23,6 +24,7 @@
                     <tr>
                         <td>${schedule.id}</td>
                         <td>${schedule.apiModelDto.url}</td>
+                        <td>${schedule.reference}</td>
                         <td>${schedule.cronExpression}</td>
                         <td><a href="schedules/${schedule.id}/stop">stop schedule</a></td>
                     </tr>
@@ -36,6 +38,7 @@
             <tr>
                 <th>schedule ID</th>
                 <th>API url</th>
+                <th>save type</th>
                 <th>cron expression</th>
                 <th>action</th>
             </tr>
@@ -45,6 +48,7 @@
                 <tr>
                     <td>${schedule.id}</td>
                     <td>${schedule.apiModelDto.url}</td>
+                    <td>${schedule.reference}</td>
                     <td>${schedule.cronExpression}</td>
                     <td><a href="schedules/${schedule.id}/run">run schedule</a></td>
                 </tr>

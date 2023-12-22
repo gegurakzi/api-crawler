@@ -38,9 +38,11 @@ public class ScheduleController {
 
   @RequestMapping(value = "/create", method = RequestMethod.POST)
   public String createSchedule(@RequestParam Long apiModelId,
+                               @RequestParam String reference,
                                @RequestParam String cronExpression) {
     ScheduleDto schedule = ScheduleDto.builder()
         .apiModelDto(apiModelService.getApiModel(apiModelId))
+        .reference(reference)
         .cronExpression(cronExpression)
         .build();
     scheduleService.updateSchedule(schedule);

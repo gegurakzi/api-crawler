@@ -51,6 +51,7 @@ public class ScheduleService {
             scheduleDto.apiModelDto.url,
             scheduleDto.apiModelDto.header
         ),
+        scheduleDto.reference,
         scheduleDto.cronExpression
     );
     scheduleRepository.save(schedule);

@@ -1,33 +1,32 @@
 package io.malachai.finance.application.scheduler;
 
 import io.malachai.finance.application.dto.ApiModelDto;
-import io.malachai.finance.application.service.CatalogService;
-import io.malachai.finance.application.service.ScheduleService;
-import io.malachai.finance.domain.ApiModel;
+import io.malachai.finance.application.dto.DocumentDto;
+import io.malachai.finance.application.dto.ScheduleDto;
+import io.malachai.finance.application.service.DocumentService;
 import io.malachai.finance.domain.Document;
-import io.malachai.finance.domain.Schedule;
 
 import java.util.logging.Logger;
 
 public class ApiCallTask implements Runnable {
 
   private static final Logger LOG = Logger.getLogger(ApiCallTask.class.getName());
-  private final Long scheduleId;
-  private final ApiModelDto apiModel;
-  private final CatalogService catalogService;
+  private final ScheduleDto schedule;
+  private final DocumentService documentService;
 
-  public ApiCallTask(Long scheduleId, ApiModelDto apiModel, CatalogService catalogService) {
-    this.scheduleId = scheduleId;
-    this.apiModel = apiModel;
-    this.catalogService = catalogService;
+  public ApiCallTask(ScheduleDto schedule, DocumentService documentService) {
+    this.schedule = schedule;
+    this.documentService = documentService;
   }
 
   @Override
   public void run() {
     // TODO: API 콜
-    LOG.info("API called: url="+apiModel.url+", header="+apiModel.header);
-    Document document = new Document();
-    catalogService.saveDocument(document, apiModel.docType);
+    LOG.info("API called: url="+schedule.apiModelDto.url+", header="+schedule.apiModelDto.header+", saveType="+schedule.reference);
+    DocumentDto document = DocumentDto.builder()
+        .id(null)
+        .body(null)
+        .build();
+    documentService.saveDocument(document, schedule.reference);
   }
-
 }
