@@ -7,13 +7,7 @@ import lombok.Getter;
 @Getter
 public class DocumentDto {
 
-  public Long id;
+  public String name;
   public String body;
 
-  public static DocumentDto of(DocumentDto document) {
-    return DocumentDto.builder()
-        .id(document.getId())
-        .body(document.getBody())
-        .build();
-  }
 }

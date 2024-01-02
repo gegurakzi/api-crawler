@@ -12,6 +12,6 @@ public interface ApiModelRepository extends Repository<ApiModel, Long> {
 
   Optional<List<ApiModel>> findAll();
   Optional<ApiModel> findById(Long id);
-  void save(ApiModel schedule);
+  void save(ApiModel apiModel);
 
 }

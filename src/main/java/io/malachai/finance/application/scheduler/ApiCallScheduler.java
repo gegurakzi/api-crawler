@@ -2,6 +2,7 @@ package io.malachai.finance.application.scheduler;
 
 import io.malachai.finance.application.dto.ScheduleDto;
 import io.malachai.finance.application.service.DocumentService;
+import io.malachai.finance.application.service.ScheduleHistoryService;
 import io.malachai.finance.application.service.ScheduleService;
 import io.malachai.finance.common.exception.AlreadyScheduledException;
 import io.malachai.finance.common.exception.NotScheduledException;
@@ -23,12 +24,14 @@ public class ApiCallScheduler {
   private static final Logger LOG = Logger.getLogger(ApiCallScheduler.class.getName());
   private final ScheduleService scheduleService;
   private final DocumentService documentService;
+  private final ScheduleHistoryService scheduleHistoryService;
   private final ThreadPoolTaskScheduler scheduler;
   private Map<Long, ScheduledFuture<?>> schedules;
 
-  public ApiCallScheduler(ScheduleService scheduleService, DocumentService documentService, ThreadPoolTaskScheduler scheduler) {
+  public ApiCallScheduler(ScheduleService scheduleService, DocumentService documentService, ScheduleHistoryService scheduleHistoryService, ThreadPoolTaskScheduler scheduler) {
     this.scheduleService = scheduleService;
     this.documentService = documentService;
+    this.scheduleHistoryService = scheduleHistoryService;
     this.scheduler = scheduler;
     this.schedules = new HashMap<>();
   }
@@ -55,7 +58,8 @@ public class ApiCallScheduler {
     ScheduleDto schedule = scheduleService.getSchedule(scheduleId);
     ApiCallTask apiCallTask = new ApiCallTask(
         schedule,
-        documentService
+        documentService,
+        scheduleHistoryService
     );
     ScheduledFuture<?> apiCall = scheduler.schedule(apiCallTask, new CronTrigger(schedule.cronExpression));
     schedules.put(scheduleId, apiCall);

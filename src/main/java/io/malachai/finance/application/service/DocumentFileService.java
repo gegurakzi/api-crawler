@@ -3,15 +3,21 @@ package io.malachai.finance.application.service;
 import io.malachai.finance.application.dto.DocumentDto;
 import org.springframework.stereotype.Service;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.logging.Logger;
 
 @Service
-public class DocumentFileService implements DocumentService{
+public class DocumentFileService implements DocumentService {
 
   private static final Logger LOG = Logger.getLogger(DocumentFileService.class.getName());
   @Override
-  public void saveDocument(DocumentDto document, String reference) {
-    // TODO: 파일 저장
-    LOG.info("document saved: "+document.body);
+  public void saveDocument(DocumentDto document, String reference) throws IOException {
+    try (FileOutputStream output = new FileOutputStream(reference+"/"+document.getName()+".txt")) {
+      output.write(document.body.getBytes());
+    } catch (IOException e) {
+      throw new IOException(e);
+    }
+    LOG.info("document saved at path "+reference+"/"+document.getName());
   }
 }

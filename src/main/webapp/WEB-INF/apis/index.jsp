@@ -1,25 +1,39 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>APIs</title>
-</head>
-<body>
+
 <%@ include file = "../includes/header.jsp" %>
-<h1>APIs</h1>
-<div>
-    <a href="apis/create">create</a>
+<div class="container">
+    <h2>APIs</h2>
+    <div class="container">
+        <a href="apis/create">create</a>
+    </div>
+    <div class="container">
+        <c:choose>
+            <c:when test="${apis == null or fn:length(apis) == 0}">
+                <p>No API exists.</p>
+            </c:when>
+            <c:otherwise>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>API ID</th>
+                            <th>URL</th>
+                            <th>Header</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <c:forEach items="${apis}" var="api">
+                            <tr>
+                                <td>${api.id}</td>
+                                <td>${api.url}</td>
+                                <td>${api.header}</td>
+                            </tr>
+                        </c:forEach>
+                    </tbody>
+                </table>
+            </c:otherwise>
+        </c:choose>
+    </div>
 </div>
-<div>
-    <c:forEach items="${apis}" var="api">
-        <ul>
-            <li>${api.id}</li>
-            <li>${api.url}</li>
-            <li>${api.header}</li>
-        </ul>
-    </c:forEach>
-</div>
-</body>
-</html>
+<%@ include file = "../includes/footer.jsp" %>
