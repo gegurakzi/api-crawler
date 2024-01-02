@@ -1,0 +1,15 @@
+.footer {
+    position: relative;
+    bottom: 0;
+}
+.footer-navbar {
+    display: flex;
+    flex-direction: row;
+    padding: 20px 10px;
+    border-top-width: thin;
+    border-top-style: solid;
+    border-top-color: #E3E2E3;
+}
+.footer-text {
+    color: #AFAFAF;
+}

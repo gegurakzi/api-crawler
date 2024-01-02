@@ -7,6 +7,7 @@
     <title>Schedules</title>
     <link rel="stylesheet" href="/resources/css/index.css">
     <link rel="stylesheet" href="/resources/css/header.css">
+    <link rel="stylesheet" href="/resources/css/footer.css">
     <link rel="stylesheet" href="/resources/css/schedules.css">
 </head>
 <body>

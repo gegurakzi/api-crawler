@@ -3,7 +3,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <%@ include file = "../includes/header.jsp" %>
-<div class="container">
+<div class="container container-main">
     <h2>Overview</h2>
     <div class="container">
         <h3>Schedule History</h3>
@@ -42,3 +42,4 @@
         </c:otherwise>
     </c:choose>
 </div>
+<%@ include file = "../includes/footer.jsp" %>

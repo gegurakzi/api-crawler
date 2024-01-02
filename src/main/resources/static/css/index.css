@@ -1,6 +1,11 @@
+html {
+    margin: 0px;
+    min-height: 100%;
+}
 body {
     margin: 0px;
 }
+
 table {
     border-collapse: separate;
     border-spacing: 0;
@@ -39,4 +44,7 @@ tr:last-child td:last-child {
 }
 .container {
     padding: 10px;
+}
+.container-main {
+    min-height: 700px;
 }
