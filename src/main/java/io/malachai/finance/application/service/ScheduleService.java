@@ -1,9 +1,12 @@
 package io.malachai.finance.application.service;
 
 import io.malachai.finance.application.dto.ScheduleDto;
+import io.malachai.finance.application.scheduler.ApiCallScheduler;
+import io.malachai.finance.common.exception.NoApiModelFoundException;
 import io.malachai.finance.common.exception.NoScheduleFoundException;
 import io.malachai.finance.domain.ApiModel;
 import io.malachai.finance.domain.Schedule;
+import io.malachai.finance.domain.repository.ApiModelRepository;
 import io.malachai.finance.domain.repository.ScheduleRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
@@ -18,9 +21,11 @@ import java.util.stream.Collectors;
 public class ScheduleService {
 
   private final ScheduleRepository scheduleRepository;
+  private final ApiModelRepository apiModelRepository;
 
-  public ScheduleService(ScheduleRepository scheduleRepository) {
+  public ScheduleService(ScheduleRepository scheduleRepository, ApiModelRepository apiModelRepository) {
     this.scheduleRepository = scheduleRepository;
+    this.apiModelRepository = apiModelRepository;
   }
 
   public List<ScheduleDto> getSchedules() {
@@ -36,9 +41,18 @@ public class ScheduleService {
     return ScheduleDto.of(schedule);
   }
 
-  public List<ScheduleDto> getMultipleSchedules(List<Long> ids) {
-    return scheduleRepository.findAllByIdIn(ids)
+  public List<ScheduleDto> getMultipleSchedules(List<Long> scheduleIds) {
+    return scheduleRepository.findAllByIdIn(scheduleIds)
         .orElse(new ArrayList<>())
+        .stream().map(ScheduleDto::of)
+        .collect(Collectors.toList());
+  }
+
+  public List<ScheduleDto> getSchedulesByApiModelId(Long apiModelId) {
+    return scheduleRepository.findAllByApiModel(
+        apiModelRepository.findById(apiModelId)
+            .orElseThrow(() -> new NoApiModelFoundException("no api found: id="+apiModelId))
+        ).orElse(new ArrayList<>())
         .stream().map(ScheduleDto::of)
         .collect(Collectors.toList());
   }
@@ -48,6 +62,7 @@ public class ScheduleService {
         scheduleDto.id,
         new ApiModel(
             scheduleDto.apiModelDto.id,
+            scheduleDto.apiModelDto.name,
             scheduleDto.apiModelDto.url,
             scheduleDto.apiModelDto.header
         ),
@@ -57,4 +72,10 @@ public class ScheduleService {
     scheduleRepository.save(schedule);
   }
 
+  public void deleteSchedulesByApiId(Long apiModelId){
+    scheduleRepository.deleteAllByApiModel(
+        apiModelRepository.findById(apiModelId)
+            .orElseThrow(() -> new NoApiModelFoundException("no api found: id="+apiModelId))
+    );
+  }
 }

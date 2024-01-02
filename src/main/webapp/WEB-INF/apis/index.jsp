@@ -17,17 +17,21 @@
                 <table>
                     <thead>
                         <tr>
-                            <th>API ID</th>
+                            <th>API id</th>
+                            <th>name</th>
                             <th>URL</th>
-                            <th>Header</th>
+                            <th>header</th>
+                            <th>action</th>
                         </tr>
                     </thead>
                     <tbody>
                         <c:forEach items="${apis}" var="api">
                             <tr>
                                 <td>${api.id}</td>
+                                <td>${api.name}</td>
                                 <td>${api.url}</td>
                                 <td>${api.header}</td>
+                                <td><a href="apis/${api.id}">update</a>
                             </tr>
                         </c:forEach>
                     </tbody>

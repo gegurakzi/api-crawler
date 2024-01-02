@@ -16,7 +16,9 @@ public class ApiModel {
   @Id
   @GeneratedValue
   Long id;
-  @Column
+  @Column(nullable = false)
+  String name;
+  @Column(nullable = false)
   String url;
   @Column
   String header;

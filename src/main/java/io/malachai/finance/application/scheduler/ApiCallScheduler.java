@@ -77,4 +77,13 @@ public class ApiCallScheduler {
     } else throw new TaskNotCanceledException("task not canceled properly: id=" + scheduleId);
   }
 
+  public void removeSchedulesByApiId(Long apiModelId) {
+    List<Long> activeScheduleIds = getActiveSchedules()
+        .stream().map(ScheduleDto::getId)
+        .toList();
+    scheduleService.getSchedulesByApiModelId(apiModelId)
+        .stream().filter(scheduleDto -> activeScheduleIds.contains(scheduleDto.id))
+        .forEach(scheduleDto -> removeSchedule(scheduleDto.id));
+  }
+
 }

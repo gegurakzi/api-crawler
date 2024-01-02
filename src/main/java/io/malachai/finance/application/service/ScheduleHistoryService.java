@@ -32,16 +32,11 @@ public class ScheduleHistoryService {
     historyDto.timestamp = new Timestamp(System.currentTimeMillis());
     ScheduleHistory history = new ScheduleHistory(
         historyDto.getId(),
-        new Schedule(
-            historyDto.scheduleDto.getId(),
-            new ApiModel(
-                historyDto.scheduleDto.apiModelDto.getId(),
-                historyDto.scheduleDto.apiModelDto.getUrl(),
-                historyDto.scheduleDto.apiModelDto.getHeader()
-            ),
-            historyDto.scheduleDto.getReference(),
-            historyDto.scheduleDto.getCronExpression()
-        ),
+        historyDto.getApiName(),
+        historyDto.getApiUrl(),
+        historyDto.getApiHeader(),
+        historyDto.getReference(),
+        historyDto.getCronExpression(),
         historyDto.getState(),
         historyDto.getMessage(),
         historyDto.getTimestamp()

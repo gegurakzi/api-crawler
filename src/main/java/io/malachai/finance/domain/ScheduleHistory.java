@@ -18,8 +18,16 @@ public class ScheduleHistory {
   @Id
   @GeneratedValue
   private Long id;
-  @ManyToOne(optional = false)
-  private Schedule schedule;
+  @Column
+  private String apiName;
+  @Column
+  private String apiUrl;
+  @Column
+  private String apiHeader;
+  @Column
+  private String reference;
+  @Column
+  private String cronExpression;
   @Column
   private String state;
   @Column

@@ -33,8 +33,12 @@ public class ApiCallTask implements Runnable {
   public void run() {
     LOG.info("API called: url="+schedule.apiModelDto.url+", header="+schedule.apiModelDto.header+", filePath="+schedule.reference);
     ScheduleHistoryDto history = ScheduleHistoryDto.builder()
-            .scheduleDto(schedule)
-            .build();
+        .apiName(schedule.getApiModelDto().getName())
+        .apiUrl(schedule.getApiModelDto().getUrl())
+        .apiHeader(schedule.getApiModelDto().getHeader())
+        .reference(schedule.getReference())
+        .cronExpression(schedule.getCronExpression())
+        .build();
     LOG.info("headers: "+Arrays.toString(schedule.apiModelDto.header.split(",")));
     HttpClient client = HttpClient.newBuilder().build();
     HttpRequest request;
@@ -59,7 +63,7 @@ public class ApiCallTask implements Runnable {
       throw new RuntimeException(e);
     }
     DocumentDto document = DocumentDto.builder()
-        .name("file name" /* TODO: 파일 이름 */)
+        .name(schedule.apiModelDto.getName()+"-"+schedule.getId()+"-"+System.currentTimeMillis() /* TODO: 파일 이름 */)
         .body(response.body())
         .build();
     try {

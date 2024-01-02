@@ -2,6 +2,7 @@ package io.malachai.finance.application.dto;
 
 import io.malachai.finance.domain.Schedule;
 import io.malachai.finance.domain.ScheduleHistory;
+import jakarta.persistence.Column;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -12,7 +13,11 @@ import java.sql.Timestamp;
 public class ScheduleHistoryDto {
 
   public Long id;
-  public ScheduleDto scheduleDto;
+  public String apiName;
+  public String apiUrl;
+  public String apiHeader;
+  public String reference;
+  public String cronExpression;
   public String state;
   public String message;
   public Timestamp timestamp;
@@ -20,7 +25,11 @@ public class ScheduleHistoryDto {
   public static ScheduleHistoryDto of(ScheduleHistory scheduleHistory) {
     return ScheduleHistoryDto.builder()
         .id(scheduleHistory.getId())
-        .scheduleDto(ScheduleDto.of(scheduleHistory.getSchedule()))
+        .apiName(scheduleHistory.getApiName())
+        .apiUrl(scheduleHistory.getApiUrl())
+        .apiHeader(scheduleHistory.getApiHeader())
+        .reference(scheduleHistory.getReference())
+        .cronExpression(scheduleHistory.getCronExpression())
         .state(scheduleHistory.getState())
         .message(scheduleHistory.getMessage())
         .timestamp(scheduleHistory.getTimestamp())

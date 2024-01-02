@@ -10,12 +10,14 @@ import lombok.Getter;
 public class ApiModelDto {
 
   public Long id;
+  public String name;
   public String url;
   public String header;
 
   public static ApiModelDto of(ApiModel apiModel) {
     return ApiModelDto.builder()
         .id(apiModel.getId())
+        .name(apiModel.getName())
         .url(apiModel.getUrl())
         .header(apiModel.getHeader())
         .build();

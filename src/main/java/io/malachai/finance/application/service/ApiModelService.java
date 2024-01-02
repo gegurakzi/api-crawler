@@ -4,6 +4,7 @@ import io.malachai.finance.application.dto.ApiModelDto;
 import io.malachai.finance.common.exception.NoApiModelFoundException;
 import io.malachai.finance.domain.ApiModel;
 import io.malachai.finance.domain.repository.ApiModelRepository;
+import io.malachai.finance.domain.repository.ScheduleRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -36,6 +37,7 @@ public class ApiModelService {
   public void updateApiModel(ApiModelDto apiModelDto) {
     ApiModel apiModel = new ApiModel(
         apiModelDto.id,
+        apiModelDto.name,
         apiModelDto.url,
         apiModelDto.header
     );

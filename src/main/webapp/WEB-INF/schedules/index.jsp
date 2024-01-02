@@ -19,6 +19,7 @@
                     <thead>
                     <tr>
                         <th>schedule ID</th>
+                        <th>API name</th>
                         <th>API url</th>
                         <th>file path</th>
                         <th>cron expression</th>
@@ -29,6 +30,7 @@
                         <c:forEach items="${activeSchedules}" var="schedule">
                             <tr>
                                 <td>${schedule.id}</td>
+                                <td>${schedule.apiModelDto.name}</td>
                                 <td>${schedule.apiModelDto.url}</td>
                                 <td>${schedule.reference}</td>
                                 <td>${schedule.cronExpression}</td>
@@ -50,6 +52,7 @@
                     <thead>
                     <tr>
                         <th>schedule ID</th>
+                        <th>API name</th>
                         <th>API url</th>
                         <th>file path</th>
                         <th>cron expression</th>
@@ -60,6 +63,7 @@
                         <c:forEach items="${inactiveSchedules}" var="schedule">
                             <tr>
                                 <td>${schedule.id}</td>
+                                <td>${schedule.apiModelDto.name}</td>
                                 <td>${schedule.apiModelDto.url}</td>
                                 <td>${schedule.reference}</td>
                                 <td>${schedule.cronExpression}</td>

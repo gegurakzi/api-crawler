@@ -51,14 +51,12 @@ public class ScheduleController {
 
   @RequestMapping(value = "/{scheduleId}/run", method = RequestMethod.GET)
   public String runSchedule(Model model, @PathVariable Long scheduleId) {
-    // TODO: 스케쥴 시작
     apiCallScheduler.addSchedule(scheduleId);
     return "redirect:/schedules";
   }
 
   @RequestMapping(value = "/{scheduleId}/stop", method = RequestMethod.GET)
   public String stopSchedule(@PathVariable Long scheduleId) {
-    // TODO: 스케쥴 정지
     apiCallScheduler.removeSchedule(scheduleId);
     return "redirect:/schedules";
   }

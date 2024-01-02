@@ -18,8 +18,8 @@
             <table>
                 <thead>
                 <tr>
-                    <th>schedule ID</th>
                     <th>timestamp</th>
+                    <th>API name</th>
                     <th>API url</th>
                     <th>file directory</th>
                     <th>cron expression</th>
@@ -29,11 +29,11 @@
                 <tbody>
                 <c:forEach items="${histories}" var="history">
                     <tr>
-                        <td>${history.scheduleDto.id}</td>
                         <td>${history.timestamp}</td>
-                        <td>${history.scheduleDto.apiModelDto.url}</td>
-                        <td>${history.scheduleDto.reference}</td>
-                        <td>${history.scheduleDto.cronExpression}</td>
+                        <td>${history.apiName}</td>
+                        <td>${history.apiUrl}</td>
+                        <td>${history.reference}</td>
+                        <td>${history.cronExpression}</td>
                         <td>${history.state}</td>
                     </tr>
                 </c:forEach>
