@@ -60,6 +60,7 @@ public class ApiCallTask implements Runnable {
       response = client.send(request, HttpResponse.BodyHandlers.ofString());
     } catch (IOException | InterruptedException e) {
       history.setState("ERROR").setMessage("Failed to retrieve HttpResponse");
+      scheduleHistoryService.updateHistory(history);
       throw new RuntimeException(e);
     }
     DocumentDto document = DocumentDto.builder()
@@ -70,6 +71,7 @@ public class ApiCallTask implements Runnable {
       documentService.saveDocument(document, schedule.reference);
     } catch (IOException e) {
       history.setState("ERROR").setMessage("Failed to save file");
+      scheduleHistoryService.updateHistory(history);
       throw new RuntimeException(e);
     }
     history.setState("SUCCESS");

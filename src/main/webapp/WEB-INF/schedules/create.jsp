@@ -23,13 +23,15 @@
                 </div>
                 <table>
                     <tr>
-                        <th>API ID</th>
+                        <th>API id</th>
+                        <th>API name</th>
                         <th>API URL</th>
                         <th>API header</th>
                     </tr>
                     <c:forEach items="${apis}" var="api">
                         <tr>
                             <td>${api.id}</td>
+                            <td>${api.name}</td>
                             <td>${api.url}</td>
                             <td>${api.header}</td>
                         </tr>
