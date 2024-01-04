@@ -34,6 +34,9 @@ dependencies {
 	implementation 'jakarta.servlet.jsp.jstl:jakarta.servlet.jsp.jstl-api:3.0.0'
 	implementation 'org.glassfish.web:jakarta.servlet.jsp.jstl:3.0.1'
 
+	implementation 'com.googlecode.json-simple:json-simple:1.1.1'
+
+
 	runtimeOnly 'com.h2database:h2'
 	//runtimeOnly 'com.mysql:mysql-connector-j'
 

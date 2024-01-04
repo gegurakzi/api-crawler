@@ -19,6 +19,7 @@
                         <tr>
                             <th>API id</th>
                             <th>name</th>
+                            <th>group</th>
                             <th>URL</th>
                             <th>header</th>
                             <th>action</th>
@@ -29,6 +30,7 @@
                             <tr>
                                 <td>${api.id}</td>
                                 <td>${api.name}</td>
+                                <td>${api.apiGroup}</td>
                                 <td>${api.url}</td>
                                 <td>${api.header}</td>
                                 <td><a href="apis/${api.id}">update</a>

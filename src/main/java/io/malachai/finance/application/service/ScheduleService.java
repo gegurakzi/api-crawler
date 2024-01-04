@@ -1,5 +1,6 @@
 package io.malachai.finance.application.service;
 
+import io.malachai.finance.application.dto.ApiModelDto;
 import io.malachai.finance.application.dto.ScheduleDto;
 import io.malachai.finance.application.scheduler.ApiCallScheduler;
 import io.malachai.finance.common.exception.NoApiModelFoundException;
@@ -63,6 +64,7 @@ public class ScheduleService {
         new ApiModel(
             scheduleDto.apiModelDto.id,
             scheduleDto.apiModelDto.name,
+            scheduleDto.apiModelDto.apiGroup,
             scheduleDto.apiModelDto.url,
             scheduleDto.apiModelDto.header
         ),
@@ -70,6 +72,27 @@ public class ScheduleService {
         scheduleDto.cronExpression
     );
     scheduleRepository.save(schedule);
+  }
+
+  public void updateSchedule(ScheduleDto scheduleDto, String apiGroup) {
+    apiModelRepository.findAllByApiGroup(apiGroup)
+        .orElse(new ArrayList<>())
+        .stream().map(ApiModelDto::of)
+        .forEach(apiModelDto -> {
+          Schedule schedule = new Schedule(
+              scheduleDto.id,
+              new ApiModel(
+                  apiModelDto.id,
+                  apiModelDto.name,
+                  apiModelDto.apiGroup,
+                  apiModelDto.url,
+                  apiModelDto.header
+              ),
+              scheduleDto.reference,
+              scheduleDto.cronExpression
+          );
+          scheduleRepository.save(schedule);
+        });
   }
 
   public void deleteSchedulesByApiId(Long apiModelId){

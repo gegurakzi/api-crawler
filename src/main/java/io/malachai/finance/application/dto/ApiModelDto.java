@@ -11,6 +11,7 @@ public class ApiModelDto {
 
   public Long id;
   public String name;
+  public String apiGroup;
   public String url;
   public String header;
 
@@ -18,6 +19,7 @@ public class ApiModelDto {
     return ApiModelDto.builder()
         .id(apiModel.getId())
         .name(apiModel.getName())
+        .apiGroup(apiModel.getApiGroup())
         .url(apiModel.getUrl())
         .header(apiModel.getHeader())
         .build();

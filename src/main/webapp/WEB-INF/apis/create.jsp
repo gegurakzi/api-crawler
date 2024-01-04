@@ -11,6 +11,10 @@
                 <input type="text" name="name" placeholder="API name"/>
             </div>
             <div class="container">
+                <h4>Group</h4>
+                <input type="text" name="group" placeholder="API group"/>
+            </div>
+            <div class="container">
                 <h4>URL</h4>
                 <textarea name="url" placeholder="API url" rows="1" cols="40"></textarea>
             </div>

@@ -33,19 +33,29 @@ public class ScheduleController {
   @RequestMapping(value = "/create", method = RequestMethod.GET)
   public String create(Model model) {
     model.addAttribute("apis", apiModelService.getApiModels());
+    model.addAttribute("groups", apiModelService.getApiGroupSet());
     return "schedules/create";
   }
 
   @RequestMapping(value = "/create", method = RequestMethod.POST)
-  public String createSchedule(@RequestParam Long apiModelId,
+  public String createSchedule(@RequestParam(required = false) Long apiModelId,
+                               @RequestParam(required = false) String apiModelGroup,
                                @RequestParam String reference,
                                @RequestParam String cronExpression) {
-    ScheduleDto schedule = ScheduleDto.builder()
-        .apiModelDto(apiModelService.getApiModel(apiModelId))
-        .reference(reference)
-        .cronExpression(cronExpression)
-        .build();
-    scheduleService.updateSchedule(schedule);
+    if(apiModelId != null) {
+      ScheduleDto schedule = ScheduleDto.builder()
+          .apiModelDto(apiModelService.getApiModel(apiModelId))
+          .reference(reference)
+          .cronExpression(cronExpression)
+          .build();
+      scheduleService.updateSchedule(schedule);
+    } else if (apiModelGroup != null) {
+      ScheduleDto schedule = ScheduleDto.builder()
+          .reference(reference)
+          .cronExpression(cronExpression)
+          .build();
+      scheduleService.updateSchedule(schedule, apiModelGroup);
+    }
     return "redirect:/schedules";
   }
 

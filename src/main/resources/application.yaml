@@ -18,3 +18,8 @@ spring:
     hibernate:
       ddl-auto: create
     show-sql: true
+
+application:
+  file-loader:
+    api-model:
+      path: /home/malachai/Workspace/projects/finance-dashboard/conf/api.json

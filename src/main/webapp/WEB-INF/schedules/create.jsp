@@ -16,6 +16,12 @@
                 <div class="container">
                     <form action="/schedules/create" method="post">
                         <input type="text" name="apiModelId" placeholder="api id">
+                        <select name="apiModelGroup">
+                            <option value="">select api group</option>
+                            <c:forEach items="${groups}" var="group">
+                                <option value="${group}">${group}</option>
+                            </c:forEach>
+                        </select>
                         <input type="text" name="reference" placeholder="file path">
                         <input type="text" name="cronExpression" placeholder="cron expression">
                         <input type="submit" value="submit">
@@ -25,6 +31,7 @@
                     <tr>
                         <th>API id</th>
                         <th>API name</th>
+                        <th>API group</th>
                         <th>API URL</th>
                         <th>API header</th>
                     </tr>
@@ -32,6 +39,7 @@
                         <tr>
                             <td>${api.id}</td>
                             <td>${api.name}</td>
+                            <td>${api.apiGroup}</td>
                             <td>${api.url}</td>
                             <td>${api.header}</td>
                         </tr>

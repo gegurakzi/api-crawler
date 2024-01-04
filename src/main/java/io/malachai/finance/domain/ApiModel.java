@@ -15,12 +15,14 @@ public class ApiModel {
 
   @Id
   @GeneratedValue
-  Long id;
+  private Long id;
   @Column(nullable = false)
-  String name;
-  @Column(nullable = false)
-  String url;
+  private String name;
   @Column
-  String header;
+  private String apiGroup;
+  @Column(nullable = false)
+  private String url;
+  @Column
+  private String header;
 
 }

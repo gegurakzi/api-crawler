@@ -8,8 +8,7 @@ import io.malachai.finance.domain.repository.ScheduleRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -38,6 +37,7 @@ public class ApiModelService {
     ApiModel apiModel = new ApiModel(
         apiModelDto.id,
         apiModelDto.name,
+        apiModelDto.apiGroup,
         apiModelDto.url,
         apiModelDto.header
     );
@@ -45,4 +45,11 @@ public class ApiModelService {
     apiModelRepository.save(apiModel);
   }
 
+  public List<String> getApiGroupSet() {
+    Set<String> groupSet = new HashSet<>();
+    apiModelRepository.findAll()
+        .orElse(new ArrayList<>())
+        .forEach(apiModel -> groupSet.add(apiModel.getApiGroup()));
+    return groupSet.stream().toList();
+  }
 }

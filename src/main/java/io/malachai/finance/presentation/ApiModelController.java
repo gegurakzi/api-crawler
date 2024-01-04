@@ -45,6 +45,7 @@ public class ApiModelController {
   @RequestMapping(value = "/create", method = RequestMethod.POST)
   public String createApiModel(@RequestParam(required = false) Long id,
                                @RequestParam String name,
+                               @RequestParam String group,
                                @RequestParam String url,
                                @RequestParam(required = false) String header,
                                @RequestParam(required = false) String cascade) {
@@ -55,6 +56,7 @@ public class ApiModelController {
     apiModelService.updateApiModel(ApiModelDto.builder()
         .id(id)
         .name(name)
+        .apiGroup(group)
         .url(url)
         .header(header)
         .build()
