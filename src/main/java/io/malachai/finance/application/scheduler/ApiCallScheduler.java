@@ -7,6 +7,7 @@ import io.malachai.finance.application.service.ScheduleService;
 import io.malachai.finance.common.exception.AlreadyScheduledException;
 import io.malachai.finance.common.exception.NotScheduledException;
 import io.malachai.finance.common.exception.TaskNotCanceledException;
+import io.malachai.finance.infra.ScheduleManager;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.stereotype.Component;
@@ -26,18 +27,18 @@ public class ApiCallScheduler {
   private final DocumentService documentService;
   private final ScheduleHistoryService scheduleHistoryService;
   private final ThreadPoolTaskScheduler scheduler;
-  private Map<Long, ScheduledFuture<?>> schedules;
+  private final ScheduleManager scheduleManager;
 
-  public ApiCallScheduler(ScheduleService scheduleService, DocumentService documentService, ScheduleHistoryService scheduleHistoryService, ThreadPoolTaskScheduler scheduler) {
+  public ApiCallScheduler(ScheduleService scheduleService, DocumentService documentService, ScheduleHistoryService scheduleHistoryService, ThreadPoolTaskScheduler scheduler, ScheduleManager scheduleManager) {
     this.scheduleService = scheduleService;
     this.documentService = documentService;
     this.scheduleHistoryService = scheduleHistoryService;
     this.scheduler = scheduler;
-    this.schedules = new HashMap<>();
+    this.scheduleManager = scheduleManager;
   }
 
   public List<ScheduleDto> getActiveSchedules() {
-    List<ScheduleDto> activeSchedules = scheduleService.getMultipleSchedules(schedules.keySet().stream().toList());
+    List<ScheduleDto> activeSchedules = scheduleService.getMultipleSchedules(scheduleManager.getRegisteredScheduleIds());
     activeSchedules.forEach(schedule -> {
       schedule.isActive = true;
     });
@@ -47,12 +48,12 @@ public class ApiCallScheduler {
   public List<ScheduleDto> getInactiveSchedules() {
     List<ScheduleDto> allSchedules = scheduleService.getSchedules();
     return allSchedules
-        .stream().filter(schedule -> !schedules.containsKey(schedule.id))
+        .stream().filter(schedule -> !scheduleManager.isIdRegistered(schedule.id))
         .collect(Collectors.toList());
   }
 
   public void addSchedule(Long scheduleId) throws AlreadyScheduledException{
-    if(schedules.containsKey(scheduleId)) {
+    if(scheduleManager.isIdRegistered(scheduleId)) {
       throw new AlreadyScheduledException("schedule id "+scheduleId+" is already scheduled");
     }
     ScheduleDto schedule = scheduleService.getSchedule(scheduleId);
@@ -62,19 +63,16 @@ public class ApiCallScheduler {
         scheduleHistoryService
     );
     ScheduledFuture<?> apiCall = scheduler.schedule(apiCallTask, new CronTrigger(schedule.cronExpression));
-    schedules.put(scheduleId, apiCall);
+    scheduleManager.register(scheduleId, apiCall);
     LOG.info("schedule added: "+scheduleId+" "+schedule.cronExpression);
   }
 
   public void removeSchedule(Long scheduleId) {
-    if(!schedules.containsKey(scheduleId)) {
+    if(!scheduleManager.isIdRegistered(scheduleId)) {
       throw new NotScheduledException("schedule id "+scheduleId+" is not scheduled");
     }
-    ScheduledFuture<?> apiCall = schedules.get(scheduleId);
-    if(apiCall.cancel(true)) {
-      schedules.remove(scheduleId);
-      LOG.info("schedule removed: "+scheduleId);
-    } else throw new TaskNotCanceledException("task not canceled properly: id=" + scheduleId);
+    scheduleManager.cancel(scheduleId);
+    LOG.info("schedule removed: "+scheduleId);
   }
 
   public void removeSchedulesByApiId(Long apiModelId) {
